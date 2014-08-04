@@ -42,10 +42,10 @@ function CapChart(options) {
     loadData(d);
   });
  
- 
 //add currency dropdown    
   var currencyList = ['BTC','USD','CAD','CNY','EUR','GBP','JPY','ILS','LTC'];
   if (self.dataType=='Transaction Volume') currencyList.unshift("XRP");
+  currencyList.unshift("all");
   var currencyDropdown = ripple.currencyDropdown(currencyList).selected({currency:self.currency})
     .on("change", function(currency) {
       self.currency = currency;
@@ -55,6 +55,17 @@ function CapChart(options) {
   
   dropdowns.append("div").attr("class","dropdowns").call(currencyDropdown);
 
+  dropdowns.append("span").text("measured in:");
+  
+  var measurementList = ['XRP','BTC','USD','CAD','CNY','EUR','GBP','JPY','ILS','LTC'];
+  var measurementDropdown = ripple.currencyDropdown(measurementList)//.selected({currency:self.currency})
+    .on("change", function(measurement) {
+      console.log("CHANGED MEASUREMENT!", measurement);
+      /*self.currency = currency;
+      var range = controls.select(".interval .selected").datum();
+      loadData(range);*/
+  });
+  dropdowns.append("div").attr("class","dropdowns").call(measurementDropdown);
 
 //add chart type select  
   var type = controls.append("div").attr("class", "chartType selectList").selectAll("a")
